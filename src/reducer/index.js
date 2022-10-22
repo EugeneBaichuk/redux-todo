@@ -39,11 +39,13 @@ const reducer = (state = initialState, action) => {
 
 const onDelete = (state, action) => {
     const todoDeleting = state.todoList.filter(todo => (todo.id !== action.payload))
-    let num1 = 0;
-    let num2 = 0;
-    todoDeleting.map(todo => (todo.important && (num1 += 1)));
-    todoDeleting.map(todo => (todo.done && (num2 += 1)));
-    return {...state, count: state.todoList.length, todoList: todoDeleting, done: num2, important: num1};
+    let importantNum = 0;
+    let doneNum = 0;
+    todoDeleting.forEach(todo => {
+        todo.important && (importantNum += 1)
+        todo.done && (doneNum += 1)
+    });
+    return {...state, count: state.todoList.length, todoList: todoDeleting, done: doneNum, important: importantNum};
 }
 
 const onToggle = (state, action, param) => {
@@ -81,7 +83,6 @@ const changeSearchValue = (state,action) => {
 }
 
 const onTaskFilter = (state, action) => {
-    console.log(state.taskFilterId);
     return {...state, taskFilterId: action.payload}
 }
 

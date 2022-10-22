@@ -4,8 +4,8 @@ import {setTodoList, onDelete, onToggle, onImportant} from '../../actions';
 import "./style.scss";
 
 const ToDoList = ({todoList, onDelete, onToggle, onImportant, searchValue, taskFilterId}) => {
-  const filteredList = todoList.filter(todo => todo.text.toLowerCase().includes(searchValue.toLowerCase()));
-    const taskFilter = (taskFilterId, filteredList) => {
+  const filteredList = (taskFilterId) => {
+    const filteredList = todoList.filter(todo => todo.text.toLowerCase().includes(searchValue.toLowerCase()));
     switch (taskFilterId) {
       case 'active_tasks':
         return filteredList.filter(item => (!item.done));
@@ -16,7 +16,7 @@ const ToDoList = ({todoList, onDelete, onToggle, onImportant, searchValue, taskF
     }
   }
 
-  const todoElements = taskFilter(taskFilterId, filteredList).map(item => {
+  const todoElements = filteredList(taskFilterId).map(item => {
       return <ToDoListItem 
       {...item} 
       onDelete={() => {onDelete(item.id)}} 
