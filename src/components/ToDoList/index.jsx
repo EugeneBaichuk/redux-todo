@@ -1,13 +1,22 @@
 import {connect} from 'react-redux';
 import { ToDoListItem } from "../ToDoListItem";
 import {setTodoList, onDelete, onToggle, onImportant} from '../../actions';
-
 import "./style.scss";
 
-const ToDoList = ({todoList, onDelete, onToggle, onImportant, searchValue, onSearch, searchTodoList}) => {
+const ToDoList = ({todoList, onDelete, onToggle, onImportant, searchValue, taskFilterId}) => {
   const filteredList = todoList.filter(todo => todo.text.toLowerCase().includes(searchValue.toLowerCase()));
+    const taskFilter = (taskFilterId, filteredList) => {
+    switch (taskFilterId) {
+      case 'active_tasks':
+        return filteredList.filter(item => (!item.done));
+      case 'done_tasks':
+        return filteredList.filter(item => (item.done));
+      default:
+        return filteredList;
+    }
+  }
 
-  const todoElements = filteredList.map(item => {
+  const todoElements = taskFilter(taskFilterId, filteredList).map(item => {
       return <ToDoListItem 
       {...item} 
       onDelete={() => {onDelete(item.id)}} 
@@ -23,8 +32,8 @@ const ToDoList = ({todoList, onDelete, onToggle, onImportant, searchValue, onSea
   )
 };
 
-const mapStateToProps = ({todoList, searchValue}) => {
-  return {todoList, searchValue}
+const mapStateToProps = ({todoList, searchValue, taskFilterId}) => {
+  return {todoList, searchValue, taskFilterId}
 }
 
 const mapDispatchToProps = {

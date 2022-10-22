@@ -30,6 +30,8 @@ const reducer = (state = initialState, action) => {
             return changeSearchValue(state,action)
         case 'TODOLIST_CLEAR_FORM':
             return clearForm(state);
+        case 'TODOLIST_ON_TASK_FILTER':
+            return onTaskFilter(state,action)   
         default:
             return state
     }
@@ -76,6 +78,11 @@ const clearForm = (state) => {
 
 const changeSearchValue = (state,action) => {
     return {...state, searchValue: action.payload}
+}
+
+const onTaskFilter = (state, action) => {
+    console.log(state.taskFilterId);
+    return {...state, taskFilterId: action.payload}
 }
 
 export default reducer;

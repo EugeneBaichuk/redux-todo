@@ -1,21 +1,29 @@
-import React from "react";
-
+import { connect } from "react-redux";
+import { onTaskFilter } from "../../actions";
 import "./style.scss";
 
 const TaskFilter = ({onTaskFilter}) => {
     return (
       <div id="filters">
-        <span onClick={onTaskFilter} className="filters_item" id="all_tasks">
+        <span onClick={() => onTaskFilter('all_tasks')} className="filters_item" id="all_tasks">
           All
         </span>
-        <span onClick={onTaskFilter} className="filters_item" id="active_tasks">
+        <span onClick={() => onTaskFilter('active_tasks')} className="filters_item" id="active_tasks">
           Active
         </span>
-        <span onClick={onTaskFilter} className="filters_item" id="done_tasks">
+        <span onClick={() => onTaskFilter('done_tasks')} className="filters_item" id="done_tasks">
           Done
         </span>
       </div>
     );
 }
 
-export default TaskFilter;
+const mapStateToProps = ({taskFilterId}) => {
+  return {taskFilterId}
+}
+
+const mapDispatchToProps = {
+  onTaskFilter
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskFilter);

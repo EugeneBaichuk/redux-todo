@@ -51,4 +51,11 @@ const clearForm = () => {
     }
 }
 
-export {setTodoList, onDelete, onToggle, onImportant, onChangeVal, onTaskAdd, changeSearchValue, clearForm};
+const onTaskFilter = (val) => {
+    return {
+        type: 'TODOLIST_ON_TASK_FILTER',
+        payload: val
+    }
+}
+
+export {setTodoList, onDelete, onToggle, onImportant, onChangeVal, onTaskAdd, changeSearchValue, clearForm, onTaskFilter};
